@@ -1,4 +1,4 @@
-#include "Point.hpp"
+#include "../../includes/MyRT.hpp"
 
 Point::Point()
 {

@@ -3,7 +3,7 @@
 
 #include "Tuple.hpp"
 
-typedef class	Point: private Tuple
+typedef class	Point: public Tuple
 {
 public:
 	Point();

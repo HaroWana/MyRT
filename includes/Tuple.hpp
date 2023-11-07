@@ -13,7 +13,7 @@ public:
 	Tuple(float x, float y, float z, int w);
 	Tuple(const Tuple &cpy);
 
-	Tuple	&operator=(Tuple &tup);
+	Tuple	&operator=(Tuple tup);
 	Tuple	operator+(Tuple &tup);
 	Tuple	operator-(Tuple &tup);
 	Tuple	operator-();
@@ -26,7 +26,7 @@ public:
 
 	//-----Accessors-----//
 	float	getCoor(char type) const;
-	float	*getCoor() const;
+	// float	*getCoor() const;
 	int		getW() const;
 	void	setCoor(char type, float nValue);
 	void	setCoor(float x, float y, float z);

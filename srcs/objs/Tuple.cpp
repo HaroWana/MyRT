@@ -1,4 +1,9 @@
-#include "Tuple.hpp"
+#include "../../includes/MyRT.hpp"
+
+Tuple::Tuple()
+{
+
+}
 
 Tuple::Tuple(float x, float y, float z, int w)
 {
@@ -12,10 +17,11 @@ Tuple::Tuple(const Tuple &cpy)
 	this->setW(cpy.getW());
 }
 
-Tuple	&Tuple::operator=(Tuple &tup)
+Tuple	&Tuple::operator=(Tuple tup)
 {
 	this->setCoor(tup.getCoor('x'), tup.getCoor('y'), tup.getCoor('z'));
-	this->setW(0);
+	this->setW(tup.getW());
+	return (*this);
 }
 
 Tuple	Tuple::operator+(Tuple &tup)
@@ -57,9 +63,12 @@ Tuple	Tuple::operator/(float &scalar)
 
 bool	Tuple::operator==(Tuple &tup)
 {
-	if (this->getCoor('x') == tup.getCoor('x') && 
-		this->getCoor('y') == tup.getCoor('y') &&
-		this->getCoor('z') == tup.getCoor('z') &&
+	if ((this->getCoor('x') - tup.getCoor('x') < EPSILON ||
+		this->getCoor('x') - tup.getCoor('x') < -EPSILON) && 
+		(this->getCoor('y') - tup.getCoor('y') < EPSILON ||
+		this->getCoor('y') - tup.getCoor('y') < -EPSILON) &&
+		(this->getCoor('z') - tup.getCoor('z') < EPSILON ||
+		this->getCoor('z') - tup.getCoor('z') < -EPSILON) &&
 		this->getW() == tup.getW())
 		return (true);
 	else
@@ -87,14 +96,16 @@ float	Tuple::getCoor(char type) const
 			return (this->_y);
 		case 'z':
 			return (this->_z);
+		default:
+			return (std::numeric_limits<float>::quiet_NaN());
 	}
 }
 
-float	*Tuple::getCoor() const
-{
-	float ret[3] = {this->_x, this->_y, this->_z};
-	return (ret);
-}
+// float	*Tuple::getCoor() const
+// {
+// 	float ret[3] = {this->_x, this->_y, this->_z};
+// 	return (ret);
+// }
 
 int		Tuple::getW() const
 {
@@ -127,4 +138,11 @@ void	Tuple::setCoor(float x, float y, float z)
 void	Tuple::setW(int nValue)
 {
 	this->_w = nValue;
+}
+
+float	Tuple::magnitude()
+{
+	return (sqrtf((this->getCoor('x') * this->getCoor('x'))
+				+ (this->getCoor('y') * this->getCoor('y'))
+				+ (this->getCoor('z') * this->getCoor('z'))));
 }
