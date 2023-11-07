@@ -8,10 +8,22 @@ void    w_value()
         print(LEFT, "PASS", LINELENGTH, FGREEN, NOC, BOLD);
     else 
         print(LEFT, "FAIL", LINELENGTH, FRED, NOC, BOLD);
+    std::cout << ", ";
+    Vector  v2(0, 0, 0);
+    if (v2.getW() == 0)
+        print(LEFT, "PASS", LINELENGTH, FGREEN, NOC, BOLD);
+    else 
+        print(LEFT, "FAIL", LINELENGTH, FRED, NOC, BOLD);
     std::cout << std::endl;
     print(LEFT, "W value for Points: ", LINELENGTH, FWHITE, NOC, RESET);
     Point   p1;
     if (p1.getW() == 1)
+        print(LEFT, "PASS", LINELENGTH, FGREEN, NOC, BOLD);
+    else 
+        print(LEFT, "FAIL", LINELENGTH, FRED, NOC, BOLD);
+    std::cout << ", ";
+    Point   p2(0, 0, 0);
+    if (p2.getW() == 1)
         print(LEFT, "PASS", LINELENGTH, FGREEN, NOC, BOLD);
     else 
         print(LEFT, "FAIL", LINELENGTH, FRED, NOC, BOLD);
@@ -201,7 +213,7 @@ void    tuple_norm()
     std::cout << ", ";
     if (std::abs(v2.magnitude() - 1) < EPSILON)
         print(LEFT, "PASS", LINELENGTH, FGREEN, NOC, BOLD);
-    else 
+    else
         print(LEFT, "FAIL", LINELENGTH, FRED, NOC, BOLD);
     std::cout << std::endl;
     }
