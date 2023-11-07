@@ -3,11 +3,12 @@
 
 #include "Tuple.hpp"
 
-typedef class	Point: public Tuple
+class	Point: public Tuple
 {
 public:
 	Point();
 	Point(float x, float y, float z);
-}	t_point;
+	Point	operator=(Tuple const &tup);
+};
 
 #endif

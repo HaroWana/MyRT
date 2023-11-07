@@ -18,5 +18,6 @@ void    tuple_sub();
 void    tuple_neg();
 void    tuple_scalar();
 void    tuple_mag();
+void    tuple_norm();
 
 #endif

@@ -13,7 +13,7 @@ public:
 	Tuple(float x, float y, float z, int w);
 	Tuple(const Tuple &cpy);
 
-	Tuple	&operator=(Tuple tup);
+	Tuple	operator=(Tuple const &tup);
 	Tuple	operator+(Tuple &tup);
 	Tuple	operator-(Tuple &tup);
 	Tuple	operator-();
@@ -23,6 +23,8 @@ public:
 	bool	operator!=(Tuple &tup);
 
 	float	magnitude();
+	void	normalize();
+	Tuple	normalized();
 
 	//-----Accessors-----//
 	float	getCoor(char type) const;

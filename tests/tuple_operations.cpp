@@ -176,3 +176,33 @@ void    tuple_mag()
     std::cout << std::endl;
     }
 }
+
+void    tuple_norm()
+{
+    {
+    print(LEFT, "Normalize: ", LINELENGTH, FWHITE, NOC, RESET);
+    Vector  v1(4, 0, 0);
+    v1.normalize();
+    Vector  expected(1, 0, 0);
+    if (v1 == expected)
+        print(LEFT, "PASS", LINELENGTH, FGREEN, NOC, BOLD);
+    else 
+        print(LEFT, "FAIL", LINELENGTH, FRED, NOC, BOLD);
+    std::cout << ", ";
+    }{
+    Vector  v1(1, 2, 3);
+    Vector  v2;
+    v2 = v1.normalized();
+    Vector  expected(0.26726, 0.53452, 0.80178);
+    if (v2 == expected)
+        print(LEFT, "PASS", LINELENGTH, FGREEN, NOC, BOLD);
+    else 
+        print(LEFT, "FAIL", LINELENGTH, FRED, NOC, BOLD);
+    std::cout << ", ";
+    if (std::abs(v2.magnitude() - 1) < EPSILON)
+        print(LEFT, "PASS", LINELENGTH, FGREEN, NOC, BOLD);
+    else 
+        print(LEFT, "FAIL", LINELENGTH, FRED, NOC, BOLD);
+    std::cout << std::endl;
+    }
+}

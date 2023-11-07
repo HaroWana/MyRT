@@ -37,4 +37,5 @@ int main()
     tuple_neg();
     tuple_scalar();
     tuple_mag();
+    tuple_norm();
 }

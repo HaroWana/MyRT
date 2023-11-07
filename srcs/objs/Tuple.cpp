@@ -17,10 +17,13 @@ Tuple::Tuple(const Tuple &cpy)
 	this->setW(cpy.getW());
 }
 
-Tuple	&Tuple::operator=(Tuple tup)
+Tuple	Tuple::operator=(Tuple const &tup)
 {
-	this->setCoor(tup.getCoor('x'), tup.getCoor('y'), tup.getCoor('z'));
-	this->setW(tup.getW());
+	if (this != &tup)
+	{
+		this->setCoor(tup.getCoor('x'), tup.getCoor('y'), tup.getCoor('z'));
+		this->setW(tup.getW());
+	}
 	return (*this);
 }
 
@@ -63,12 +66,9 @@ Tuple	Tuple::operator/(float &scalar)
 
 bool	Tuple::operator==(Tuple &tup)
 {
-	if ((this->getCoor('x') - tup.getCoor('x') < EPSILON ||
-		this->getCoor('x') - tup.getCoor('x') < -EPSILON) && 
-		(this->getCoor('y') - tup.getCoor('y') < EPSILON ||
-		this->getCoor('y') - tup.getCoor('y') < -EPSILON) &&
-		(this->getCoor('z') - tup.getCoor('z') < EPSILON ||
-		this->getCoor('z') - tup.getCoor('z') < -EPSILON) &&
+	if (std::abs(this->getCoor('x') - tup.getCoor('x')) < EPSILON && 
+		std::abs(this->getCoor('y') - tup.getCoor('y')) < EPSILON &&
+		std::abs(this->getCoor('z') - tup.getCoor('z')) < EPSILON &&
 		this->getW() == tup.getW())
 		return (true);
 	else
@@ -145,4 +145,20 @@ float	Tuple::magnitude()
 	return (sqrtf((this->getCoor('x') * this->getCoor('x'))
 				+ (this->getCoor('y') * this->getCoor('y'))
 				+ (this->getCoor('z') * this->getCoor('z'))));
+}
+
+void	Tuple::normalize()
+{
+	this->setCoor(this->getCoor('x') / this->magnitude(),
+				this->getCoor('y') / this->magnitude(),
+				this->getCoor('z') / this->magnitude());
+	this->setW(this->getW() / this->magnitude()); // Why? I don't know, but I'll find out.
+}
+
+Tuple	Tuple::normalized()
+{
+	return (Tuple(this->getCoor('x') / this->magnitude(),
+				this->getCoor('y') / this->magnitude(),
+				this->getCoor('z') / this->magnitude(),
+				this->getW() / this->magnitude()));
 }

@@ -11,3 +11,12 @@ Vector::Vector(float x, float y, float z)
 	this->setCoor(x, y, z);
 	this->setW(0);
 }
+
+Vector	Vector::operator=(Tuple const &tup)
+{
+	if (this != &tup)
+	{
+		Tuple::operator=(tup);
+	}
+	return (*this);
+}
