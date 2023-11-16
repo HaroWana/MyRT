@@ -25,7 +25,7 @@ Tuple	Tuple::operator=(Tuple const &tup)
 	return (*this);
 }
 
-Tuple	Tuple::operator+(Tuple &tup)
+Tuple	Tuple::operator+(Tuple const &tup)
 {
 	return (Tuple(_x + tup.getCoor('x'), 
 					_y + tup.getCoor('y'),
@@ -66,8 +66,7 @@ bool	Tuple::operator==(Tuple &tup)
 {
 	if (std::abs(_x - tup.getCoor('x')) < EPSILON && 
 		std::abs(_y - tup.getCoor('y')) < EPSILON &&
-		std::abs(_z - tup.getCoor('z')) < EPSILON &&
-		_w == tup.getW())
+		std::abs(_z - tup.getCoor('z')) < EPSILON)
 		return (true);
 	else
 		return (false);
@@ -77,8 +76,7 @@ bool	Tuple::operator!=(Tuple &tup)
 {
 	if (std::abs(_x - tup.getCoor('x')) > EPSILON && 
 		std::abs(_y - tup.getCoor('y')) > EPSILON &&
-		std::abs(_z - tup.getCoor('z')) > EPSILON &&
-		_w != tup.getW())
+		std::abs(_z - tup.getCoor('z')) > EPSILON)
 		return (true);
 	else
 		return (false);
@@ -165,4 +163,10 @@ Tuple	Tuple::normalized()
 				_y / this->magnitude(),
 				_z / this->magnitude(),
 				_w / this->magnitude()));
+}
+
+std::ostream	&operator<<(std::ostream &out, const Tuple &tup)
+{
+	out << "(" << tup.getCoor('x') << ", " << tup.getCoor('y') << ", " << tup.getCoor('z') << tup.getW() << ")";
+	return (out);
 }

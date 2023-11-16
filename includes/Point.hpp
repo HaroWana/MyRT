@@ -9,6 +9,7 @@ public:
 	Point();
 	Point(float x, float y, float z);
 	Point	operator=(Tuple const &tup);
+	Point	operator+(Tuple const &tup);
 };
 
 #endif

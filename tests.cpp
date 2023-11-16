@@ -1,4 +1,4 @@
-#include "tests/tests.hpp"
+#include "includes/tests.hpp"
 
 void    colorize(std::string &s, WFGColor FGcolor, WBGColor BGcolor, WFormat format)
 {
@@ -26,8 +26,9 @@ void    print( WPosition pos, std::string s, int linelength, WFGColor FGcolor, W
 
 int main()
 {
-    print(CENTRE, "Running tests now...", LINELENGTH, FGREEN, BRED, BOLD);
     std::cout << std::endl;
+    print(CENTRE, "Test Results", LINELENGTH, FGREEN, BRED, BOLD);
+    std::cout << std::endl << std::endl;
 
     print(LEFT, "TUPLE OPERATIONS:", LINELENGTH, FGREEN, NOC, ULINE);
     std::cout << std::endl;
@@ -38,4 +39,18 @@ int main()
     tuple_scalar();
     tuple_mag();
     tuple_norm();
+    tuple_dot();
+    tuple_cross();
+    std::cout << std::endl;
+
+    print(LEFT, "PROJECTILE:", LINELENGTH, FGREEN, NOC, ULINE);
+    std::cout << std::endl;
+    shoot_up();
+    std::cout << std::endl;
+
+    print(LEFT, "COLOR OPERATIONS:", LINELENGTH, FGREEN, NOC, ULINE);
+    std::cout << std::endl;
+    color_add();
+    color_sub();
+    color_mult();
 }

@@ -9,7 +9,8 @@ public:
 	Vector();
 	Vector(float x, float y, float z);
 	Vector	operator=(Tuple const &tup);
-	Vector	operator^(Vector const &vec);
+	Vector	operator^(Vector const &vec); //Cross product
+	Vector	operator+(Tuple const &tup);
 };
 
 #endif

@@ -14,14 +14,14 @@ public:
 	Tuple(const Tuple &cpy);
 
 	Tuple	operator=(Tuple const &tup);
-	Tuple	operator+(Tuple &tup);
+	Tuple	operator+(Tuple const &tup);
 	Tuple	operator-(Tuple &tup);
 	Tuple	operator-();
 	Tuple	operator*(float &scalar);
 	Tuple	operator/(float &scalar);
 	bool	operator==(Tuple &tup);
 	bool	operator!=(Tuple &tup);
-	float	operator*(Tuple &tup);
+	float	operator*(Tuple &tup); // Dot product
 
 	float	magnitude();
 	void	normalize();
@@ -35,5 +35,7 @@ public:
 	void	setCoor(float x, float y, float z);
 	void	setW(int nValue);
 };
+
+std::ostream	&operator<<(std::ostream &out, const Tuple &tup);
 
 #endif

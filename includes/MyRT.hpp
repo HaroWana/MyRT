@@ -4,6 +4,7 @@
 #include "Tuple.hpp"
 #include "Vector.hpp"
 #include "Point.hpp"
+#include "Color.hpp"
 #include <iostream>
 #include <cmath>
 #include <string>
