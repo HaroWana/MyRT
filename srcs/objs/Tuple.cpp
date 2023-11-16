@@ -5,16 +5,14 @@ Tuple::Tuple()
 
 }
 
-Tuple::Tuple(float x, float y, float z, int w)
+Tuple::Tuple(float x, float y, float z, int w): _x(x), _y(y), _z(z), _w(w)
 {
-	this->setCoor(x, y, z);
-	this->setW(w);
+
 }
 
-Tuple::Tuple(const Tuple &cpy)
+Tuple::Tuple(const Tuple &cpy): _x(cpy.getCoor('x')), _y(cpy.getCoor('y')), _z(cpy.getCoor('z')), _w(cpy.getW())
 {
-	this->setCoor(cpy.getCoor('x'), cpy.getCoor('y'), cpy.getCoor('z'));
-	this->setW(cpy.getW());
+
 }
 
 Tuple	Tuple::operator=(Tuple const &tup)
@@ -22,54 +20,54 @@ Tuple	Tuple::operator=(Tuple const &tup)
 	if (this != &tup)
 	{
 		this->setCoor(tup.getCoor('x'), tup.getCoor('y'), tup.getCoor('z'));
-		this->setW(tup.getW());
+		_w = tup.getW();
 	}
 	return (*this);
 }
 
 Tuple	Tuple::operator+(Tuple &tup)
 {
-	return (Tuple(this->getCoor('x') + tup.getCoor('x'), 
-					this->getCoor('y') + tup.getCoor('y'),
-					this->getCoor('z') + tup.getCoor('z'),
-					this->getW() + tup.getW()));
+	return (Tuple(_x + tup.getCoor('x'), 
+					_y + tup.getCoor('y'),
+					_z + tup.getCoor('z'),
+					_w + tup.getW()));
 }
 
 Tuple	Tuple::operator-(Tuple &tup)
 {
-	return (Tuple(this->getCoor('x') - tup.getCoor('x'), 
-					this->getCoor('y') - tup.getCoor('y'),
-					this->getCoor('z') - tup.getCoor('z'),
-					this->getW() - tup.getW()));
+	return (Tuple(_x - tup.getCoor('x'), 
+					_y - tup.getCoor('y'),
+					_z - tup.getCoor('z'),
+					_w - tup.getW()));
 }
 
 Tuple	Tuple::operator-()
 {
-	return (Tuple(-(this->getCoor('x')), -(this->getCoor('y')), -(this->getCoor('z')), -(this->getW())));
+	return (Tuple(-_x, -_y, -_z, -_w));
 }
 
 Tuple	Tuple::operator*(float &scalar)
 {
-	return (Tuple(this->getCoor('x') * scalar,
-					this->getCoor('y') * scalar,
-					this->getCoor('z') * scalar,
-					this->getW() * scalar));
+	return (Tuple(_x * scalar,
+					_y * scalar,
+					_z * scalar,
+					_w * scalar));
 }
 
 Tuple	Tuple::operator/(float &scalar)
 {
-	return (Tuple(this->getCoor('x') / scalar,
-					this->getCoor('y') / scalar,
-					this->getCoor('z') / scalar,
-					this->getW() / scalar));
+	return (Tuple(_x / scalar,
+					_y / scalar,
+					_z / scalar,
+					_w / scalar));
 }
 
 bool	Tuple::operator==(Tuple &tup)
 {
-	if (std::abs(this->getCoor('x') - tup.getCoor('x')) < EPSILON && 
-		std::abs(this->getCoor('y') - tup.getCoor('y')) < EPSILON &&
-		std::abs(this->getCoor('z') - tup.getCoor('z')) < EPSILON &&
-		this->getW() == tup.getW())
+	if (std::abs(_x - tup.getCoor('x')) < EPSILON && 
+		std::abs(_y - tup.getCoor('y')) < EPSILON &&
+		std::abs(_z - tup.getCoor('z')) < EPSILON &&
+		_w == tup.getW())
 		return (true);
 	else
 		return (false);
@@ -77,13 +75,21 @@ bool	Tuple::operator==(Tuple &tup)
 
 bool	Tuple::operator!=(Tuple &tup)
 {
-	if (this->getCoor('x') != tup.getCoor('x') && 
-		this->getCoor('y') != tup.getCoor('y') &&
-		this->getCoor('z') != tup.getCoor('z') &&
-		this->getW() != tup.getW())
+	if (std::abs(_x - tup.getCoor('x')) > EPSILON && 
+		std::abs(_y - tup.getCoor('y')) > EPSILON &&
+		std::abs(_z - tup.getCoor('z')) > EPSILON &&
+		_w != tup.getW())
 		return (true);
 	else
 		return (false);
+}
+
+float	Tuple::operator*(Tuple &tup)
+{
+	return ((_x * tup.getCoor('x')) + 
+			(_y * tup.getCoor('y')) +
+			(_z * tup.getCoor('z')) +
+			(_w * tup.getW()));
 }
 
 float	Tuple::getCoor(char type) const
@@ -142,23 +148,21 @@ void	Tuple::setW(int nValue)
 
 float	Tuple::magnitude()
 {
-	return (sqrtf((this->getCoor('x') * this->getCoor('x'))
-				+ (this->getCoor('y') * this->getCoor('y'))
-				+ (this->getCoor('z') * this->getCoor('z'))));
+	return (sqrtf((_x * _x) + (_y * _y) + (_z * _z)));
 }
 
 void	Tuple::normalize()
 {
-	this->setCoor(this->getCoor('x') / this->magnitude(),
-				this->getCoor('y') / this->magnitude(),
-				this->getCoor('z') / this->magnitude());
-	this->setW(this->getW() / this->magnitude()); // Why? I don't know, but I'll find out.
+	_x /= this->magnitude();
+	_y /= this->magnitude();
+	_z /= this->magnitude();
+	_w /= this->magnitude(); // Why? I don't know, but I'll find out.
 }
 
 Tuple	Tuple::normalized()
 {
-	return (Tuple(this->getCoor('x') / this->magnitude(),
-				this->getCoor('y') / this->magnitude(),
-				this->getCoor('z') / this->magnitude(),
-				this->getW() / this->magnitude()));
+	return (Tuple(_x / this->magnitude(),
+				_y / this->magnitude(),
+				_z / this->magnitude(),
+				_w / this->magnitude()));
 }

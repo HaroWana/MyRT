@@ -21,6 +21,7 @@ public:
 	Tuple	operator/(float &scalar);
 	bool	operator==(Tuple &tup);
 	bool	operator!=(Tuple &tup);
+	float	operator*(Tuple &tup);
 
 	float	magnitude();
 	void	normalize();
