@@ -7,6 +7,7 @@ Image::Image(): width(600), height(400)
     for (int i = 0; i < width; i++)
     {
         pixels[i] = new Color[height];
+        bzero(pixels[i], height);
     }
 }
 
@@ -16,6 +17,7 @@ Image::Image(int width, int height): width(width), height(height)
     for (int i = 0; i < width; i++)
     {
         pixels[i] = new Color[height];
+        bzero(pixels[i], height);
     }
 }
 
@@ -42,4 +44,5 @@ Color   &Image::pixelAt(int width, int height)
 std::ostream    &operator<<(std::ostream &out, const Image img)
 {
     out << "Width: " << img.width << "  Height: " << img.height;
+    return (out);
 }

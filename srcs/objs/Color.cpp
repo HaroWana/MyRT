@@ -31,4 +31,5 @@ Color   Color::operator*(Color const &color)
 std::ostream    &operator<<(std::ostream &out, const Color &color)
 {
     out << "(" << color.getCoor('x') << ", " << color.getCoor('y') << ", " << color.getCoor('z') << ")";
+    return (out);
 }

@@ -8,7 +8,7 @@ class   Image
 public:
     int const     width;
     int const     height;
-    Color   **pixels;
+    Color         **pixels;
 
     Image();
     Image(int width, int height);
