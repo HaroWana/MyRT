@@ -12,6 +12,8 @@ public:
 
     Color   operator*(Color const &color);
     Color   operator*(float scalar) { return(Tuple::operator*(scalar)); }
+
+    int     getRGB() const;
 };
 
 std::ostream    &operator<<(std::ostream &out, const Color &color);

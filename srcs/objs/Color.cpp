@@ -22,11 +22,12 @@ Color   Color::operator*(Color const &color)
                 getCoor('z') * color.getCoor('z')));
 }
 
-// float   *Color::getRGB() const
-// {
-//     float   ret[3] = {this->_r, this->_g, this->_b};
-//     return (ret);
-// }
+int  Color::getRGB() const
+{
+    // int   ret = 0;
+    // ret = (static_cast<int>(this->getCoor('x') * 255) << 16 && 0xFF) | (static_cast<int>(this->getCoor('y') * 255) << 8 && 0xFF) | (static_cast<int>(this->getCoor('z') * 255) && 0xFF);
+    return (static_cast<int>(this->getCoor('x') * 255) << 16 & 0xFF) | (static_cast<int>(this->getCoor('y') * 255) << 8 & 0xFF) | (static_cast<int>(this->getCoor('z') * 255) & 0xFF);
+}
 
 std::ostream    &operator<<(std::ostream &out, const Color &color)
 {
