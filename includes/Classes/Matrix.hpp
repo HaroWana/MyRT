@@ -19,6 +19,7 @@ public:
 
 	Matrix	&operator=(Matrix const &mat);
 	bool	operator==(Matrix const &mat);
+	Matrix	operator*(Matrix const &mat);
 };
 
 std::ostream    &operator<<(std::ostream &out, const Matrix &mat);

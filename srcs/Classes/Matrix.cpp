@@ -67,7 +67,7 @@ int	Matrix::fillMatrix(float **elements)
 	
 	for (int r = 0; elements[r] != NULL; r++)
 	{
-		for (int c = 0; elements[c] != NULL; c++)
+		for (int c = 0; elements[r][c] != NULL; c++)
 			matrix[r][c] = elements[r][c];
 	}
 	return (1);
@@ -100,11 +100,36 @@ bool	Matrix::operator==(Matrix const &mat)
 	{
 		for (int c = 0; c < size; c++)
 		{
-			if (matrix[r][c] != mat.matrix[r][c])
+			if (abs(matrix[r][c] - mat.matrix[r][c]) > EPSILON)
 				return (false);
 		}
 	}
-	return (true);	
+	return (true);
+}
+
+Matrix	Matrix::operator*(Matrix const &mat)
+{
+	int rlen = 0;
+	int	clen = 0;
+	for (int r = 0; mat.matrix[r] != NULL; r++)
+	{
+		for (int c = 0; mat.matrix[r][c] != NULL; c++)
+			clen++;
+		rlen++;
+	}
+	if (rlen != size || clen != size)
+		return (NULL);
+
+	Matrix	res(size);
+	for (int r = 0; r < size; r++)
+	{
+		for (int c = 0; c < size; c++)
+		{
+			for (int i = 0; i < size; i++)
+				res.matrix[r][c] += this->matrix[r][i] * mat.matrix[i][c];
+		}
+	}
+	return (res);
 }
 
 std::ostream	&operator<<(std::ostream &out, const Matrix &mat)
