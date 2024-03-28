@@ -46,4 +46,7 @@ void    color_add();
 void    color_sub();
 void    color_mult();
 
+// Image //
+void    ppm_content();
+
 #endif

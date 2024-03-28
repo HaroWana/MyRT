@@ -53,4 +53,10 @@ int main()
     color_add();
     color_sub();
     color_mult();
+    std::cout << std::endl;
+
+    print(LEFT, "IMAGE:", LINELENGTH, FGREEN, NOC, ULINE);
+    std::cout << std::endl;
+    ppm_content();
+    std::cout << std::endl;
 }

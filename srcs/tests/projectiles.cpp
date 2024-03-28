@@ -12,7 +12,10 @@ Projectile    tick(Environment env, Projectile proj)
 
 void    shoot_up()
 {
-    Projectile proj;
+    Projectile  proj;
+    proj.vel = Vector(1, 1.8, 0);
+    proj.vel.normalize();
+    proj.vel * 11.25f;
     Environment env;
     for (int i = 0; proj.pos.getCoor('y') > 0; i++)
     {

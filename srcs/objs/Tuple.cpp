@@ -33,7 +33,7 @@ Tuple	Tuple::operator+(Tuple const &tup)
 					_w + tup.getW()));
 }
 
-Tuple	Tuple::operator-(Tuple &tup)
+Tuple	Tuple::operator-(Tuple const &tup)
 {
 	return (Tuple(_x - tup.getCoor('x'), 
 					_y - tup.getCoor('y'),
@@ -46,7 +46,7 @@ Tuple	Tuple::operator-()
 	return (Tuple(-_x, -_y, -_z, -_w));
 }
 
-Tuple	Tuple::operator*(float &scalar)
+Tuple	Tuple::operator*(float scalar)
 {
 	return (Tuple(_x * scalar,
 					_y * scalar,
