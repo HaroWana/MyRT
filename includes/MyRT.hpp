@@ -8,13 +8,13 @@
 #include <cstdlib>
 #include <limits>
 #include <string.h>
-#include "./utils/numDigits.hpp"
-#include "./objs/Tuple.hpp"
-#include "./objs/Vector.hpp"
-#include "./objs/Point.hpp"
-#include "./objs/Color.hpp"
-#include "./objs/Image.hpp"
-#include "./objs/Matrix.hpp"
+#include "./Utils/numDigits.hpp"
+#include "./Classes/Tuple.hpp"
+#include "./Classes/Vector.hpp"
+#include "./Classes/Point.hpp"
+#include "./Classes/Color.hpp"
+#include "./Classes/Image.hpp"
+#include "./Classes/Matrix.hpp"
 
 # define EPSILON 0.00001
 

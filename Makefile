@@ -19,16 +19,16 @@ CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 EXEC = RT_tests
 
 SRC = tests.cpp \
-	srcs/tests/tuple_operations.cpp \
-	srcs/tests/projectiles.cpp \
-	srcs/tests/color_operations.cpp \
-	srcs/tests/image_tests.cpp \
-	srcs/utils/numDigits.cpp \
-	srcs/objs/Tuple.cpp \
-	srcs/objs/Vector.cpp \
-	srcs/objs/Point.cpp \
-	srcs/objs/Color.cpp \
-	srcs/objs/Image.cpp
+	srcs/Tests/tuple_operations.cpp \
+	srcs/Tests/projectiles.cpp \
+	srcs/Tests/color_operations.cpp \
+	srcs/Tests/image_tests.cpp \
+	srcs/Utils/numDigits.cpp \
+	srcs/Classes/Tuple.cpp \
+	srcs/Classes/Vector.cpp \
+	srcs/Classes/Point.cpp \
+	srcs/Classes/Color.cpp \
+	srcs/Classes/Image.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
