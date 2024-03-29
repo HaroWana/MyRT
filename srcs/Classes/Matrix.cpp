@@ -1,144 +1,201 @@
 #include "../../includes/MyRT.hpp"
 
-Matrix::Matrix(int size): size(size)
+MatrixXf::MatrixXf(int size)
 {
-	matrix = new float*[size];
+	primary.size = size;
+	primary.matrix = new float*[size];
 	for (int i = 0; i < size; i++)
 	{
-		matrix[i] = new float[size];
-		bzero(matrix[i], size * sizeof(float));
+		primary.matrix[i] = new float[size];
+		bzero(primary.matrix[i], size * sizeof(float));
 	}
+	transfo = NULL;
 }
 
-Matrix::Matrix(int size, float **elements): size(size)
+MatrixXf::MatrixXf(int size, float **elements)
 {
-	matrix = new float*[size];
+	primary.size = size;
+	primary.matrix = new float*[size];
 	for (int r = 0; r < size; r++)
 	{
-		matrix[r] = new float[size];
-		bzero(matrix[r], size * sizeof(float));
+		primary.matrix[r] = new float[size];
+		bzero(primary.matrix[r], size * sizeof(float));
 		for (int c = 0; c < size; c++)
 		{
-			matrix[r][c] = elements[r][c];
+			primary.matrix[r][c] = elements[r][c];
 		}
 	}
+	transfo = NULL;
 }
 
-Matrix::~Matrix()
+MatrixXf::~MatrixXf()
 {
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < primary.size; i++)
     {
-        delete [] matrix[i];
+        delete [] primary.matrix[i];
     }
-    delete [] matrix;
-}
+    delete [] primary.matrix;
 
-float	&Matrix::getElement(int r, int c) const
-{
-	return (matrix[r][c]);
-}
-
-int	Matrix::getSize() const
-{
-	return (size);
-}
-
-int		Matrix::setElement(int r, int c, float element)
-{
-	if (r >= size || c >= size)
-		return (0);
-
-	matrix[r][c] = element;
-	return (1);
-}
-
-int	Matrix::fillMatrix(float **elements)
-{
-	int rlen = 0;
-	int	clen = 0;
-	for (int r = 0; elements[r] != NULL; r++)
+	if (transfo != NULL)
 	{
-		for (int c = 0; elements[c] != NULL; c++)
-			clen++;
-		rlen++;
+		for (int i = 0; i < primary.size; i++)
+		{
+			delete [] transfo[i];
+		}
+		delete [] transfo;
 	}
-	if (rlen != size || clen != size)
-		return (0);
+}
+
+float	**MatrixXf::getMatrix() const
+{
+	return (primary.matrix);
+}
+
+float	**MatrixXf::getTransformation() const
+{
+	return (transfo);
+}
+
+float	&MatrixXf::getElement(int r, int c) const
+{
+	return (primary.matrix[r][c]);
+}
+
+int	MatrixXf::getSize() const
+{
+	return (primary.size);
+}
+
+void	MatrixXf::setElement(int r, int c, float element)
+{
+	if (r >= primary.size || c >= primary.size)
+		throw M_WrongSizeException();
+
+	primary.matrix[r][c] = element;
+	// return (1);
+}
+
+void	MatrixXf::setMatrix(float **elements)
+{
+	// int rlen = 0;
+	// int	clen = 0;
+	// float **rtmp = elements;
 	
-	for (int r = 0; elements[r] != NULL; r++)
+	// while (rtmp++ != NULL)
+	// {
+	// 	// float *tmp = elements[r];
+	// 	// while (tmp++)
+	// 	// 	clen++; 
+	// 	// rlen++;
+	// }
+	// if (rlen != size || clen != size)
+	// 	throw M_WrongSizeException();
+	// if (sizeof(elements) / sizeof(float*) != primary.size)
+	// 	throw M_WrongSizeException();
+	std::cout << "Elements: " << sizeof(*elements) / sizeof(elements[0]) << std::endl;
+	
+	for (int r = 0; r < primary.size; r++)
 	{
-		for (int c = 0; elements[r][c] != NULL; c++)
-			matrix[r][c] = elements[r][c];
+		for (int c = 0; c < primary.size; c++)
+			primary.matrix[r][c] = elements[r][c];
 	}
-	return (1);
+	// return (1);
 }
 
-int		Matrix::deleteElement(int r, int c)
+void		MatrixXf::deleteElement(int r, int c)
 {
-	if (r >= size || c >= size)
-		return (0);
+	if (r >= primary.size || c >= primary.size)
+		throw M_OutOfBoundsException();
 
-	matrix[r][c] = 0;
-	return (1);
+	primary.matrix[r][c] = 0;
+	// return (1);
 }
 
-Matrix	&Matrix::operator=(Matrix const &mat)
+MatrixXf	&MatrixXf::operator=(MatrixXf const &mat)
 {
 	if (this != &mat)
 	{
-		this->fillMatrix(mat.matrix);
+		this->setMatrix(mat.primary.matrix);
 	}
 	return (*this);
 }
 
-bool	Matrix::operator==(Matrix const &mat)
+bool	MatrixXf::operator==(MatrixXf const &mat)
 {
-	if (size != mat.getSize())
+	if (primary.size != mat.getSize())
 		return (false);
 
-	for (int r = 0; r < size; r++)
+	for (int r = 0; r < primary.size; r++)
 	{
-		for (int c = 0; c < size; c++)
+		for (int c = 0; c < primary.size; c++)
 		{
-			if (abs(matrix[r][c] - mat.matrix[r][c]) > EPSILON)
+			if (std::abs(primary.matrix[r][c] - mat.primary.matrix[r][c]) > EPSILON)
 				return (false);
 		}
 	}
 	return (true);
 }
 
-Matrix	Matrix::operator*(Matrix const &mat)
+MatrixXf	MatrixXf::operator*(MatrixXf const &mat)
 {
-	int rlen = 0;
-	int	clen = 0;
-	for (int r = 0; mat.matrix[r] != NULL; r++)
-	{
-		for (int c = 0; mat.matrix[r][c] != NULL; c++)
-			clen++;
-		rlen++;
-	}
-	if (rlen != size || clen != size)
-		return (NULL);
+	// int rlen = 0;
+	// int	clen = 0;
+	// for (int r = 0; mat.matrix[r] != NULL; r++)
+	// {
+	// 	for (int c = 0; mat.matrix[r][c] != NULL; c++)
+	// 		clen++;
+	// 	rlen++;
+	// }
+	// if (rlen != size || clen != size)
+	// 	return (NULL);
 
-	Matrix	res(size);
-	for (int r = 0; r < size; r++)
+	if (mat.primary.size != this->primary.size)
+		throw M_WrongSizeException();
+
+	MatrixXf	res(primary.size);
+	for (int r = 0; r < primary.size; r++)
 	{
-		for (int c = 0; c < size; c++)
+		for (int c = 0; c < primary.size; c++)
 		{
-			for (int i = 0; i < size; i++)
-				res.matrix[r][c] += this->matrix[r][i] * mat.matrix[i][c];
+			for (int i = 0; i < primary.size; i++)
+				res.primary.matrix[r][c] += this->primary.matrix[r][i] * mat.primary.matrix[i][c];
 		}
 	}
 	return (res);
 }
 
-std::ostream	&operator<<(std::ostream &out, const Matrix &mat)
+MatrixXf	MatrixXf::operator*(Tuple const &tup)
+{
+	if (this->primary.size != 3 && this->primary.size != 4) // Might need to be changed for check only of size 4
+		throw M_WrongSizeException();
+
+	MatrixXf res(primary.size);
+	for (int r = 0; r < primary.size; r++)
+	{
+		for (int c = 0; c < primary.size; c++)
+		{
+			for (int i = 0; i < primary.size; i++)
+				res.primary.matrix[r][c] += this->primary.matrix[r][i] * tup.getCoor()[i];
+		}
+	}
+	return (res);
+}
+
+std::ostream	&operator<<(std::ostream &out, const MatrixXf &mat)
 {
 	for (int r = 0; r < mat.getSize(); r++)
 	{
 		for (int c = 0; c < mat.getSize(); c++)
 		{
-			out << " " << mat.getElement(r, c) << " |";
+			out << " " << mat.getElement(r, c);
+			if (c < mat.getSize() - 1)
+				out << " |";
+		}
+		out << std::endl;
+		if (r < mat.getSize() - 1)
+		{
+			for (int i = 0; i < mat.getSize() * 4 - 1; i++)
+				out << "-";
 		}
 		out << std::endl;
 	}

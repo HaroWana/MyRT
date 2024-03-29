@@ -59,4 +59,9 @@ int main()
     std::cout << std::endl;
     ppm_content();
     std::cout << std::endl;
+
+	print(LEFT, "MATRIX:", LINELENGTH, FGREEN, NOC, ULINE);
+    std::cout << std::endl;
+	std::cout << std::endl;
+	matrix_fill();
 }

@@ -29,7 +29,7 @@ public:
 
 	//-----Accessors-----//
 	float	getCoor(char type) const;
-	// float	*getCoor() const;
+	float	*getCoor() const;
 	int		getW() const;
 	void	setCoor(char type, float nValue);
 	void	setCoor(float x, float y, float z);

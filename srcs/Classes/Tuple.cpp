@@ -105,11 +105,14 @@ float	Tuple::getCoor(char type) const
 	}
 }
 
-// float	*Tuple::getCoor() const
-// {
-// 	float ret[3] = {this->_x, this->_y, this->_z};
-// 	return (ret);
-// }
+float	*Tuple::getCoor() const
+{
+	float *ret = new float[3]; 
+	ret[0] = this->_x;
+	ret[1] = this->_y;
+	ret[2] = this->_z;
+	return (ret);
+}
 
 int		Tuple::getW() const
 {

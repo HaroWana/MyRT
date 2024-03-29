@@ -23,12 +23,14 @@ SRC = tests.cpp \
 	srcs/Tests/projectiles.cpp \
 	srcs/Tests/color_operations.cpp \
 	srcs/Tests/image_tests.cpp \
+	srcs/Tests/matrix_operations.cpp \
 	srcs/Utils/numDigits.cpp \
 	srcs/Classes/Tuple.cpp \
 	srcs/Classes/Vector.cpp \
 	srcs/Classes/Point.cpp \
 	srcs/Classes/Color.cpp \
-	srcs/Classes/Image.cpp
+	srcs/Classes/Image.cpp \
+	srcs/Classes/Matrix.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

@@ -49,4 +49,7 @@ void    color_mult();
 // Image //
 void    ppm_content();
 
+// Matrices //
+void	matrix_fill();
+
 #endif
