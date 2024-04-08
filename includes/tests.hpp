@@ -51,5 +51,6 @@ void    ppm_content();
 
 // Matrices //
 void	matrix_fill();
+void    matrix_transpose();
 
 #endif

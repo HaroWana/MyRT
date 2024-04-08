@@ -7,7 +7,7 @@ MatrixXf::MatrixXf(int size)
 	for (int i = 0; i < size; i++)
 	{
 		primary.matrix[i] = new float[size];
-		bzero(primary.matrix[i], size * sizeof(float));
+		bzero((void*)primary.matrix[i], size * sizeof(float));
 	}
 	transfo = NULL;
 }
@@ -19,13 +19,20 @@ MatrixXf::MatrixXf(int size, float **elements)
 	for (int r = 0; r < size; r++)
 	{
 		primary.matrix[r] = new float[size];
-		bzero(primary.matrix[r], size * sizeof(float));
+		bzero((void*)primary.matrix[r], size * sizeof(float));
 		for (int c = 0; c < size; c++)
 		{
 			primary.matrix[r][c] = elements[r][c];
 		}
 	}
 	transfo = NULL;
+}
+
+MatrixXf::MatrixXf(MatrixXf const &copy)
+{
+	MatrixXf(copy.getSize(), copy.getMatrix());
+	if (copy.getTransformation())
+		this->setTransformation(copy.getTransformation());
 }
 
 MatrixXf::~MatrixXf()
@@ -72,26 +79,10 @@ void	MatrixXf::setElement(int r, int c, float element)
 		throw M_WrongSizeException();
 
 	primary.matrix[r][c] = element;
-	// return (1);
 }
 
 void	MatrixXf::setMatrix(float **elements)
 {
-	// int rlen = 0;
-	// int	clen = 0;
-	// float **rtmp = elements;
-	
-	// while (rtmp++ != NULL)
-	// {
-	// 	// float *tmp = elements[r];
-	// 	// while (tmp++)
-	// 	// 	clen++; 
-	// 	// rlen++;
-	// }
-	// if (rlen != size || clen != size)
-	// 	throw M_WrongSizeException();
-	// if (sizeof(elements) / sizeof(float*) != primary.size)
-	// 	throw M_WrongSizeException();
 	std::cout << "Elements: " << sizeof(*elements) / sizeof(elements[0]) << std::endl;
 	
 	for (int r = 0; r < primary.size; r++)
@@ -99,7 +90,30 @@ void	MatrixXf::setMatrix(float **elements)
 		for (int c = 0; c < primary.size; c++)
 			primary.matrix[r][c] = elements[r][c];
 	}
-	// return (1);
+}
+
+void	MatrixXf::setTransformation(float **elements)
+{
+	std::cout << "Elements Transformation: " << sizeof(*elements) / sizeof(elements[0]) << std::endl;
+	
+	if (transfo == NULL)
+	{
+		transfo = new float*[primary.size];
+		for (int r = 0; r < primary.size; r++)
+		{
+			transfo[r] = new float[primary.size];
+			for (int c = 0; c < primary.size; c++)
+				transfo[r][c] = elements[r][c];
+		} 
+	}
+	else
+	{
+		for (int r = 0; r < primary.size; r++)
+		{
+			for (int c = 0; c < primary.size; c++)
+				transfo[r][c] = elements[r][c];
+		}
+	}
 }
 
 void		MatrixXf::deleteElement(int r, int c)
@@ -108,7 +122,15 @@ void		MatrixXf::deleteElement(int r, int c)
 		throw M_OutOfBoundsException();
 
 	primary.matrix[r][c] = 0;
-	// return (1);
+}
+
+void		MatrixXf::transpose()
+{
+	for (int r = 0; r < primary.size; r++)
+	{
+		for (int c = r + 1; c < primary.size; c++)
+			std::swap(primary.matrix[r][c], primary.matrix[c][r]);
+	}
 }
 
 MatrixXf	&MatrixXf::operator=(MatrixXf const &mat)
@@ -138,17 +160,6 @@ bool	MatrixXf::operator==(MatrixXf const &mat)
 
 MatrixXf	MatrixXf::operator*(MatrixXf const &mat)
 {
-	// int rlen = 0;
-	// int	clen = 0;
-	// for (int r = 0; mat.matrix[r] != NULL; r++)
-	// {
-	// 	for (int c = 0; mat.matrix[r][c] != NULL; c++)
-	// 		clen++;
-	// 	rlen++;
-	// }
-	// if (rlen != size || clen != size)
-	// 	return (NULL);
-
 	if (mat.primary.size != this->primary.size)
 		throw M_WrongSizeException();
 
@@ -176,6 +187,23 @@ MatrixXf	MatrixXf::operator*(Tuple const &tup)
 		{
 			for (int i = 0; i < primary.size; i++)
 				res.primary.matrix[r][c] += this->primary.matrix[r][i] * tup.getCoor()[i];
+		}
+	}
+	return (res);
+}
+
+MatrixXf	MatrixXf::operator*(Matrix const &mat)
+{
+	if (mat.size != this->primary.size)
+		throw M_WrongSizeException();
+
+	MatrixXf	res(primary.size);
+	for (int r = 0; r < primary.size; r++)
+	{
+		for (int c = 0; c < primary.size; c++)
+		{
+			for (int i = 0; i < primary.size; i++)
+				res.primary.matrix[r][c] += this->primary.matrix[r][i] * mat.matrix[i][c];
 		}
 	}
 	return (res);

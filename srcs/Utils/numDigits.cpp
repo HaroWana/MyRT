@@ -17,7 +17,7 @@ int numDigits(T number)
 template <>
 int numDigits(int64_t x) {
     if (x == INT64_MIN) return 19 + 1;
-if (x < 0) return numDigits(-x) + 1;
+    if (x < 0) return numDigits(-x) + 1;
 
     if (x >= 10000000000) {
         if (x >= 100000000000000) {
@@ -32,7 +32,7 @@ if (x < 0) return numDigits(-x) + 1;
             if (x >= 1000000000000000)
                 return 16;
             return 15;
-        } 
+        }
         if (x >= 1000000000000) {
             if (x >= 10000000000000)
                 return 14;

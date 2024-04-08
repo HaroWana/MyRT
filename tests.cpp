@@ -64,4 +64,6 @@ int main()
     std::cout << std::endl;
 	std::cout << std::endl;
 	matrix_fill();
+    std::cout << std::endl;
+    matrix_transpose();
 }

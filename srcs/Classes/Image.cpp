@@ -6,7 +6,7 @@ Image::Image(): width(600), height(400)
     for (int i = 0; i < width; i++)
     {
         pixels[i] = new Color[height];
-        bzero(pixels[i], height * sizeof(Color));
+        bzero((void*)pixels[i], height * sizeof(Color));
     }
 }
 
@@ -16,7 +16,7 @@ Image::Image(int width, int height): width(width), height(height)
     for (int w = 0; w < width; w++)
     {
         pixels[w] = new Color[height];
-        bzero(pixels[w], height * sizeof(Color));
+        bzero((void*)pixels[w], height * sizeof(Color));
     }
 }
 
@@ -51,12 +51,11 @@ std::string     Image::canvas_to_ppm()
         {
             for (char   c = 'x'; c < 123; c++)
             {
-                // Evil-looking line, needs to be simplified or documented (or both)
-                int color = static_cast<int>(pixels[w][h].getCoor(c) * 255 > 255 ? 255 : pixels[w][h].getCoor(c) * 255 + 0.5);
+                int color = static_cast<int>(pixels[w][h].getCoor(c) * 255 + 0.5 > 255 ? 255 : pixels[w][h].getCoor(c) * 255 + 0.5);
                 if (color < 0)
                     color = 0;
                 int digitsNum = numDigits(color);
-                if (line_len + digitsNum >= 70)
+                if (line_len + digitsNum + 1 >= 70)
                 {
                     ppm += '\n';
                     line_len = 0;

@@ -16,6 +16,7 @@ class MatrixXf
 public:
 	MatrixXf(int size);
 	MatrixXf(int size, float **elements);
+	MatrixXf(MatrixXf const &copy);
 	~MatrixXf();
 
 	float	**getMatrix() const;
@@ -24,12 +25,16 @@ public:
 	int		getSize() const;
 	void	setElement(int r, int c, float element);
 	void	setMatrix(float **elements);
+	void	setTransformation(float **elements);
 	void	deleteElement(int r, int c);
 
+	void	transpose();
+
 	MatrixXf	&operator=(MatrixXf const &mat);
-	bool	operator==(MatrixXf const &mat);
+	bool		operator==(MatrixXf const &mat);
 	MatrixXf	operator*(MatrixXf const &mat);
 	MatrixXf	operator*(Tuple const &tup);
+	MatrixXf	operator*(Matrix const &mat);
 
 	class M_WrongSizeException: public std::exception {
 		public:
