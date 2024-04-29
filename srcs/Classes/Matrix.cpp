@@ -81,6 +81,7 @@ void	MatrixXf::setElement(int r, int c, float element)
 	primary.matrix[r][c] = element;
 }
 
+// Columns and lines outside matrix size are NOT detected and therefore truncated (but 'elements' is not modified)
 void	MatrixXf::setMatrix(float **elements)
 {
 	std::cout << "Elements: " << sizeof(*elements) / sizeof(elements[0]) << std::endl;
@@ -135,10 +136,17 @@ void		MatrixXf::transpose()
 
 MatrixXf	&MatrixXf::operator=(MatrixXf const &mat)
 {
-	if (this != &mat)
-	{
-		this->setMatrix(mat.primary.matrix);
-	}
+	if (this == &mat)
+		return (*this);
+
+	if (mat.getSize() != this->primary.size)
+			throw M_WrongSizeException();
+
+	this->setMatrix(mat.primary.matrix);
+	
+	if (mat.transfo != NULL)
+		this->setTransformation(mat.transfo);
+
 	return (*this);
 }
 

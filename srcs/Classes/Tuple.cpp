@@ -64,7 +64,7 @@ Tuple	Tuple::operator/(float &scalar)
 
 bool	Tuple::operator==(Tuple &tup)
 {
-	if (std::abs(_x - tup.getCoor('x')) < EPSILON && 
+	if (std::abs(_x - tup.getCoor('x')) < EPSILON && // research if FLT_EPSILON is more appropriate
 		std::abs(_y - tup.getCoor('y')) < EPSILON &&
 		std::abs(_z - tup.getCoor('z')) < EPSILON)
 		return (true);

@@ -1,8 +1,6 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include "Tuple.hpp"
-
 class	Vector: public Tuple
 {
 public:
