@@ -185,7 +185,7 @@ MatrixXf	MatrixXf::operator*(MatrixXf const &mat)
 
 MatrixXf	MatrixXf::operator*(Tuple const &tup)
 {
-	if (this->primary.size != 3 && this->primary.size != 4) // Might need to be changed for check only of size 4
+	if ((this->primary.size != 3 && this->primary.size != 4)) // Might need to be changed for check only of size 4
 		throw M_WrongSizeException();
 
 	MatrixXf res(primary.size);
